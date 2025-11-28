@@ -5,7 +5,7 @@ export const Reszletes = () => {
   const { id } = useParams(); // URL-ből vesszük az ID-t
   const [pizza, setPizza] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null)?
 
   useEffect(() => {
     const fetchPizza = async () => {
@@ -57,3 +57,4 @@ export const Reszletes = () => {
     </div>
   );
 };
+
