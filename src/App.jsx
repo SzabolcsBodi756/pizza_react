@@ -1,7 +1,10 @@
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Reszletes } from "./pages/reszletes";
 import { useEffect, useState } from "react";
 import "./App.css";
 
-export const App = () => {
+// EBBEN a komponensben marad a mostani lista-logika
+const PizzaList = () => {
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,8 +28,10 @@ export const App = () => {
     fetchPizzas();
   }, []);
 
-  if (loading) return <div className="text-center mt-4 fs-4">Betöltés...</div>;
-  if (error) return <div className="text-center text-danger mt-4">{error}</div>;
+  if (loading)
+    return <div className="text-center mt-4 fs-4">Betöltés...</div>;
+  if (error)
+    return <div className="text-center text-danger mt-4">{error}</div>;
 
   return (
     <div className="container mt-4">
@@ -44,13 +49,28 @@ export const App = () => {
               />
               <div className="card-body">
                 <h5 className="card-title">{pizza.name}</h5>
-                <p className="card-text">ID: {pizza.id}</p>
+                {/* Itt lett link az ID */}
+                <p className="card-text">
+                  <Link to={`/pizza/${pizza.id}`}>ID: {pizza.id}</Link>
+                </p>
               </div>
             </div>
           </div>
         ))}
       </div>
     </div>
+  );
+};
+
+export const App = () => {
+  return (
+    <Routes>
+      {/* Főoldal – marad a jelenlegi lista oldal */}
+      <Route path="/" element={<PizzaList />} />
+
+      {/* Dinamikus route egy pizzához */}
+      <Route path="/pizza/:id" element={<Reszletes />} />
+    </Routes>
   );
 };
 
